@@ -6,12 +6,16 @@
         $password = $_POST["password"];
 
         $server = "localhost";
-        $db = "resolutions";
 
         try 
         {
-            $connection = new mysqli($server, $username, $password, $db);
-            $_SESSION["connection"] = $connection;
+            $connection = new mysqli($server, $username, $password);
+            session_start(); 
+            
+            $_SESSION["username"] = $username;
+            $_SESSION["password"] = $password;
+            $_SESSION["server"] = $server;
+
             header("Location: menu.php");
             exit();
         }

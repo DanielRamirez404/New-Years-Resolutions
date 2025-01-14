@@ -1,0 +1,10 @@
+CREATE DATABASE IF NOT EXISTS Resolutions;
+
+USE Resolutions;
+
+CREATE TABLE IF NOT EXISTS Resolution(
+  id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+  name VARCHAR(30) NOT NULL,
+  description VARCHAR(150) NOT NULL,
+  creationDate DATE NOT NULL default NOW()
+);
