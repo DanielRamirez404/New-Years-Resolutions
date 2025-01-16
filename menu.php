@@ -73,29 +73,40 @@
         <h4 style="color: gray;">No registered data. Please, feel free to add some entries</h4>
     <?php else: ?>
         <br>
-        <div class="row row-cols 2">
+        <div class="col">
+            <form class="my-2 mx-auto row g-2">
+                <input style="width: 63%;" type="text" class="mx-auto form-control" placeholder="Introduce tu búsqueda">
+                            <input style="display: none;" type="hidden" name="delete_id" value="$entry[0]">
+                <button style="max-width: 25%;" class="mx-auto btn btn-primary" type="button">Buscar</button>
+            </form>
         <?php
             $result = $connection->query("SELECT id, name, description, creationDate FROM Resolution ORDER BY creationDate");
             $postAction = htmlspecialchars($_SERVER["PHP_SELF"]);    
-            while ($entry = $result->fetch_row()) {
+            while ($entry = $result->fetch_row())
+            {
                 echo <<<ENTRY
-                <div class="card" style="width: 18rem;">
+                <div class="mx-auto card" style="width: 18rem;">
                     <div class="card-body">
                         <h5 class="card-title" style="font-weight: bold;">$entry[1]</h5>
                         <h6 class="card-subtitle mb-2 text-muted">$entry[3]</h6>
                         <p class="card-text">$entry[2]</p>
-                        <button type="button" class="btn btn-outline-primary">Edit</button>
-                        <form method="POST" action="$postAction">
+                        <div class="row">
+                        <form class="col" method="POST" action="$postAction">
                             <input type="hidden" name="delete_id" value="$entry[0]">
-                            <button type="submit" class="btn btn-outline-danger">Delete</button>
+                            <button style="width: 100%;" type="submit" class="btn btn-outline-primary">Edit</button>
                         </form>
+                        <form class="col" method="POST" action="$postAction">
+                            <input type="hidden" name="delete_id" value="$entry[0]">
+                            <button style="width: 100%;" type="submit" class="btn btn-outline-danger">Delete</button>
+                        </form>
+                        </div>
                     </div>
                 </div>
+                <br>
                 ENTRY;
             }    
       ?>
       <div>
-        
 
     <?php endif; ?>
 
