@@ -48,24 +48,34 @@
 </head>
 <body>
 
-    <h2>New year's resolutions</h2>
+    <h2 style="font-weight: bold;">New year's resolutions</h2>
 
     <?php if (isset($error)) : ?>
         <p style="color: red;"><?php echo $error; ?></p>
-    <?php elseif ($connection->query("SELECT COUNT(*) FROM Resolution")->numrows == 0) : ?>
-        <h4 style="color: gray;">No registered data. Please, feel free to add some entries</h4>
+    <?php elseif ($connection->query("SELECT COUNT(*) FROM Resolution")->numrows === 0) : ?>
+    <h4 style="color: gray;">No registered data. Please, feel free to add some entries</h4>
     <?php else: ?>
-        <table>
-            <tr>
-                <th>name</th>
-            </tr>
-            <tr>
-                <td>DATE NOT NULL default NOW()</td>
-            </tr>
-            <tr>
-                <td>PRIMARY KEY</td>
-            </tr>
-        </table>
+        <br>
+        <div class="row row-cols 2">
+        <?php
+            $result = $connection->query("SELECT name, description, creationDate FROM Resolution ORDER BY creationDate");
+            while ($entry = $result->fetch_row()) {
+                echo <<<ENTRY
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title" style="font-weight: bold;">$entry[0]</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">$entry[2]</h6>
+                        <p class="card-text">$entry[1]</p>
+                        <button type="button" class="btn btn-outline-primary">Edit</button>
+                        <button type="button" class="btn btn-outline-danger">Delete</button>
+                    </div>
+                </div>
+                ENTRY;
+            }    
+      ?>
+      <div>
+        
+
     <?php endif; ?>
 
 </body>
