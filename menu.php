@@ -1,6 +1,7 @@
 <?php
 
     session_start();
+    $postAction = htmlspecialchars($_SERVER["PHP_SELF"]);    
 
     try
     {
@@ -29,13 +30,21 @@
                 else 
                     $alert = "There was an error tryin to delete your entry";
             }
+            else if (isset($_POST['search'])) 
+            {
+                $searchText = $_POST['search'];
+
+                if ($searchText === "")
+                    unset($_SESSION["search_query"]);
+                else 
+                    $_SESSION["search_query"] = $searchText;
+            }
         }
     }
     catch(Exception $exception)
     {
         $error = "An error occured: " . $exception->getMessage();
     }
-
 ?>
 
 
@@ -74,14 +83,31 @@
     <?php else: ?>
         <br>
         <div class="col">
-            <form class="my-2 mx-auto row g-2">
-                <input style="width: 63%;" type="text" class="mx-auto form-control" placeholder="Introduce tu búsqueda">
-                            <input style="display: none;" type="hidden" name="delete_id" value="$entry[0]">
-                <button style="max-width: 25%;" class="mx-auto btn btn-primary" type="button">Buscar</button>
+            <form method="POST" action="<?php echo $postAction ?>" class="my-2 mx-auto row g-2">
+                <input style="width: 63%;" type="text" name="search" class="mx-auto form-control" placeholder="Introduce tu búsqueda">
+                <button style="max-width: 25%;" class="mx-auto btn btn-primary" type="submit">Buscar</button>
             </form>
         <?php
-            $result = $connection->query("SELECT id, name, description, creationDate FROM Resolution ORDER BY creationDate");
-            $postAction = htmlspecialchars($_SERVER["PHP_SELF"]);    
+
+            $searchQuery = "SELECT id, name, description, creationDate FROM Resolution";
+            $orderStatement = " ORDER BY creationDate";
+            $matchCondition = " WHERE CONCAT_WS(' ', name, description) LIKE ?";        
+
+            $result = null;
+
+            if (!isset($_SESSION["search_query"]))
+            {
+                $result = $connection->query($searchQuery . $orderStatement);
+            }
+            else 
+            {
+                $preparedQuery = $connection->prepare($searchQuery . $matchCondition . $orderStatement);
+                $searchTerm = '%' . $_SESSION["search_query"] . '%'; 
+                $preparedQuery->bind_param("s", $searchTerm);
+                $preparedQuery->execute();
+                $result = $preparedQuery->get_result();
+            }
+            
             while ($entry = $result->fetch_row())
             {
                 echo <<<ENTRY
