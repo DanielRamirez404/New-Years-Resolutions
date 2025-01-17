@@ -81,12 +81,16 @@
     <?php elseif ($connection->query("SELECT COUNT(*) FROM Resolution")->numrows === 0) : ?>
         <h4 style="color: gray;">No registered data. Please, feel free to add some entries</h4>
     <?php else: ?>
-        <br>
         <div class="col">
-            <form method="POST" action="<?php echo $postAction ?>" class="my-2 mx-auto row g-2">
-                <input style="width: 63%;" type="text" name="search" class="mx-auto form-control" placeholder="Introduce tu búsqueda">
-                <button style="max-width: 25%;" class="mx-auto btn btn-primary" type="submit">Buscar</button>
+        <div class="row mx-auto">
+            <form style="width: 85%" method="POST" action="<?php echo $postAction ?>" class="my-2 row g-1">
+                <input style="width: 195px;" type="text" name="search" class="mx-auto form-control" placeholder="Introduce tu búsqueda">
+                <button style="max-width: 35px; font-weight: bold" class="mx-auto btn btn-primary" type="submit">Ir</button>
             </form>
+            <form style="width: 15%" method="POST" action="<?php echo $postAction ?>" class="my-2 row g-1">
+                <button style="max-width: 35px; font-weight: bold" class="btn btn-secondary" type="submit">+</button>
+            </form>
+        </div>
         <?php
 
             $searchQuery = "SELECT id, name, description, creationDate FROM Resolution";

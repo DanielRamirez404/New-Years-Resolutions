@@ -48,13 +48,13 @@
 </head>
 <body>
 
-    <h2>Login</h2>
+    <h2 style="font-weight: bold; margin-bottom: 25px;">Login</h2>
 
     <?php if (isset($error)) : ?>
         <p style="color: red;"><?php echo $error; ?></p>
     <?php endif; ?>
     
-    <form  method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+    <form class="card p-3" method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
         <div class="mb-3">
             <label for="username" class="form-label">Username</label>
             <input type="text" class="form-control" id="username" name="username" required>
