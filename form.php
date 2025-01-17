@@ -7,6 +7,19 @@
     {
         $connection = new mysqli($_SESSION["server"], $_SESSION["username"], $_SESSION["password"], "Resolutions");
 
+        $name = null;
+        $description = null;
+
+        if (isset($_SESSION["modify_id"]))
+        {
+            $id = $_SESSION["modify_id"]; 
+            $searchQuery = "SELECT name, description FROM Resolution WHERE id=$id";
+            $result = $connection->query($searchQuery)->fetch_row();
+            $name = $result[0];
+            $description = $result[1]; 
+        }
+
+
         if ($_SERVER["REQUEST_METHOD"] == "POST")
         {
             if (isset($_POST['go_back']))
@@ -74,11 +87,11 @@
 
     <form class="card p-3" method="POST" action="<?php echo $postAction ?>">
         <div class="input-group mb-3">
-            <input name="name" type="text" class="form-control" placeholder="Resolución" aria-label="Username" aria-describedby="basic-addon1">
+        <input name="name" type="text" class="form-control" placeholder="Resolución" aria-label="Username" aria-describedby="basic-addon1" required value="<?php echo $name; ?>">
         </div>
         <div class="input-group">
             <span class="input-group-text">Descripción</span>
-            <textarea name="description" class="form-control" aria-label="Descripción"></textarea>
+            <textarea name="description" class="form-control" aria-label="Descripción"><?php echo $description;?></textarea>
         </div>
         <input type="hidden" name="save">
         <button style="width: 100px" type="submit" class="mt-3 mx-auto btn btn btn-outline-primary">Guardar</button>
