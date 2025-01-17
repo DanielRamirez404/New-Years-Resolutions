@@ -39,6 +39,18 @@
                 else 
                     $_SESSION["search_query"] = $searchText;
             }
+            else if (isset($_POST['create']))
+            {
+                unset($_SESSION["modify_id"]);
+                header("Location: form.php"); 
+                exit();
+            }
+            else if (isset($_POST['modify_id']))
+            {
+                $_SESSION["modify_id"] = $_POST['modify_id'];
+                header("Location: form.php");
+                exit();
+            }
         }
     }
     catch(Exception $exception)
@@ -88,6 +100,7 @@
                 <button style="max-width: 35px; font-weight: bold" class="mx-auto btn btn-primary" type="submit">Ir</button>
             </form>
             <form style="width: 15%" method="POST" action="<?php echo $postAction ?>" class="my-2 row g-1">
+                <input type="hidden" name="create">
                 <button style="max-width: 35px; font-weight: bold" class="btn btn-secondary" type="submit">+</button>
             </form>
         </div>
@@ -122,7 +135,7 @@
                         <p class="card-text">$entry[2]</p>
                         <div class="row">
                         <form class="col" method="POST" action="$postAction">
-                            <input type="hidden" name="delete_id" value="$entry[0]">
+                            <input type="hidden" name="modify_id" value="$entry[0]">
                             <button style="width: 100%;" type="submit" class="btn btn-outline-primary">Edit</button>
                         </form>
                         <form class="col" method="POST" action="$postAction">

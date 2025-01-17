@@ -9,6 +9,32 @@
 
         if ($_SERVER["REQUEST_METHOD"] == "POST")
         {
+            if (isset($_POST['go_back']))
+            {
+                header("Location: menu.php");
+                exit();
+            }
+            else if (isset($_POST['save']))
+            {
+
+                $preparedQuery = null;
+
+                if (isset($_SESSION["modify_id"]))
+                {
+                    $id = $_SESSION["modify_id"]; 
+                    $preparedQuery = $connection->prepare("UPDATE Resolution SET name = ?, description = ? WHERE id = $id");
+                }
+                else 
+                {
+                    $preparedQuery = $connection->prepare("INSERT INTO Resolution (name, description) VALUES (?, ?)");
+                }
+
+                $preparedQuery->bind_param("ss", $_POST['name'], $_POST['description']);
+                $preparedQuery->execute();
+              
+                header("Location: menu.php");
+                exit();
+            }
         }
     }
     catch(Exception $exception)
@@ -46,15 +72,20 @@
         <p style="color: red;"><?php echo $error; ?></p>
     <?php endif; ?>
 
-    <form class="card p-3">
+    <form class="card p-3" method="POST" action="<?php echo $postAction ?>">
         <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Resolución" aria-label="Username" aria-describedby="basic-addon1">
+            <input name="name" type="text" class="form-control" placeholder="Resolución" aria-label="Username" aria-describedby="basic-addon1">
         </div>
         <div class="input-group">
             <span class="input-group-text">Descripción</span>
-            <textarea class="form-control" aria-label="Descripción"></textarea>
+            <textarea name="description" class="form-control" aria-label="Descripción"></textarea>
         </div>
-            <button style="width: 100px" type="submit" class="mt-3 mx-auto btn btn btn-outline-primary">Guardar</button>
+        <input type="hidden" name="save">
+        <button style="width: 100px" type="submit" class="mt-3 mx-auto btn btn btn-outline-primary">Guardar</button>
+    </form>
+    <form method="POST" action="<?php echo $postAction ?>">
+        <input type="hidden" name="go_back">
+        <button style="position: relative; left: 115px; bottom: 70px; width: 100px" type="submit" class="mt-3 mx-auto btn btn btn-outline-secondary">Atrás</button>
     </form>
 
 </body>
