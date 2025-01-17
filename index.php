@@ -48,7 +48,7 @@
 </head>
 <body>
 
-    <h2 style="font-weight: bold; margin-bottom: 25px;">Login</h2>
+    <h2 style="font-weight: bold; margin-bottom: 25px;">Inicio de Sesión</h2>
 
     <?php if (isset($error)) : ?>
         <p style="color: red;"><?php echo $error; ?></p>
@@ -56,14 +56,14 @@
     
     <form class="card p-3" method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
         <div class="mb-3">
-            <label for="username" class="form-label">Username</label>
+            <label style="font-weight: bold;" for="username" class="form-label">Usuario</label>
             <input type="text" class="form-control" id="username" name="username" required>
         </div>
         <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
+            <label style="font-weight: bold" for="password" class="form-label">Contraseña</label>
             <input type="password" class="form-control" id="password" name="password" required>
         </div>
-            <button type="submit" class="btn btn btn-outline-primary">Login</button>
+            <button type="submit" class="btn btn btn-outline-primary">Iniciar</button>
     </form>
 
 </body>

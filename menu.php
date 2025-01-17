@@ -82,7 +82,7 @@
 </head>
 <body>
 
-    <h2 style="font-weight: bold;">New year's resolutions</h2>
+    <h2 style="font-weight: bold;">Resoluciones de 2025</h2>
 
     <?php if (isset($alert)) : ?>
         <script>alert($alert)</script>
@@ -96,12 +96,12 @@
         <div class="col">
         <div class="row mx-auto">
             <form style="width: 85%" method="POST" action="<?php echo $postAction ?>" class="my-2 row g-1">
-                <input style="width: 195px;" type="text" name="search" class="mx-auto form-control" placeholder="Introduce tu búsqueda">
-                <button style="max-width: 35px; font-weight: bold" class="mx-auto btn btn-primary" type="submit">Ir</button>
+            <input style="width: 190px;" type="text" name="search" class="mx-auto form-control" placeholder="Introduce tu búsqueda" value="<?php echo $_SESSION['search_query']; ?>">
+                <button style="max-width: 35px; max-height: 35px; font-weight: bold" class="mx-auto btn btn-primary" type="submit">Ir</button>
             </form>
             <form style="width: 15%" method="POST" action="<?php echo $postAction ?>" class="my-2 row g-1">
                 <input type="hidden" name="create">
-                <button style="max-width: 35px; font-weight: bold" class="btn btn-secondary" type="submit">+</button>
+                <button style="max-width: 35px; max-height: 35px; font-weight: bold" class="btn btn-secondary" type="submit">+</button>
             </form>
         </div>
         <?php
@@ -124,7 +124,9 @@
                 $preparedQuery->execute();
                 $result = $preparedQuery->get_result();
             }
-            
+
+            $entries = 0;
+
             while ($entry = $result->fetch_row())
             {
                 echo <<<ENTRY
@@ -136,17 +138,28 @@
                         <div class="row">
                         <form class="col" method="POST" action="$postAction">
                             <input type="hidden" name="modify_id" value="$entry[0]">
-                            <button style="width: 100%;" type="submit" class="btn btn-outline-primary">Edit</button>
+                            <button style="width: 100%;" type="submit" class="btn btn-outline-primary">Editar</button>
                         </form>
                         <form class="col" method="POST" action="$postAction">
                             <input type="hidden" name="delete_id" value="$entry[0]">
-                            <button style="width: 100%;" type="submit" class="btn btn-outline-danger">Delete</button>
+                            <button style="width: 100%;" type="submit" class="btn btn-outline-danger">Borrar</button>
                         </form>
                         </div>
                     </div>
                 </div>
                 <br>
                 ENTRY;
+                
+                $entries++;
+            }
+            
+            if ($entries === 0)
+            {
+                echo <<<NONE
+                    <div class="my-2 py-4 mx-auto card" style="width: 18rem;">
+                        <h2 style="color: gray; font-weight: bold;" class="mx-auto">Sin resultados</h2>
+                    </div>
+                NONE;
             }    
       ?>
       <div>
