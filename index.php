@@ -21,7 +21,7 @@
         }
         catch(Exception $exception)
         {
-            $error = "An error occured: " . $exception->getMessage();
+            $error = "Un error ha ocurrido: " . $exception->getMessage();
         }
     }
 ?>

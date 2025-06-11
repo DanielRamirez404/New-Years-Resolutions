@@ -90,13 +90,13 @@
 
     <?php if (isset($error)) : ?>
         <p style="color: red;"><?php echo $error; ?></p>
-    <?php elseif ($connection->query("SELECT COUNT(*) FROM Resolution")->numrows === 0) : ?>
+    <?php elseif ($connection->query("SELECT COUNT(*) FROM Resolution")->fetch_row()[0] == 0) : ?>
         <h4 style="color: gray;">No registered data. Please, feel free to add some entries</h4>
     <?php else: ?>
         <div class="col">
         <div class="row mx-auto">
             <form style="width: 85%" method="POST" action="<?php echo $postAction ?>" class="my-2 row g-1">
-            <input style="width: 190px;" type="text" name="search" class="mx-auto form-control" placeholder="Introduce tu búsqueda" value="<?php echo $_SESSION['search_query']; ?>">
+            <input style="width: 190px;" type="text" name="search" class="mx-auto form-control" placeholder="Introduce tu búsqueda" value="<?php echo (isset($_SESSION['search_query'])) ? $_SESSION['search_query'] : ""; ?>">
                 <button style="max-width: 35px; max-height: 35px; font-weight: bold" class="mx-auto btn btn-primary" type="submit">Ir</button>
             </form>
             <form style="width: 15%" method="POST" action="<?php echo $postAction ?>" class="my-2 row g-1">
