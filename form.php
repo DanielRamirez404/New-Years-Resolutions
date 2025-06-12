@@ -45,7 +45,7 @@
                     $preparedQuery = $connection->prepare("INSERT INTO Resolution (name, description) VALUES (?, ?)");
                 }
 
-                $preparedQuery->bind_param("ss", $_POST['name'], $_POST['description']);
+                $preparedQuery->bind_param("ss", depurar($_POST['name']), depurar($_POST['description']));
                 $preparedQuery->execute();
               
                 header("Location: menu.php");

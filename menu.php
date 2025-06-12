@@ -25,17 +25,17 @@
         {
             if (isset($_POST['delete_id']))
             {
-                $id = $_POST['delete_id'];
+                $id = depurar($_POST['delete_id']);
                 $deletionQuery = "DELETE FROM Resolution WHERE id=$id";
 
                 if ($connection->query($deletionQuery)) 
-                    $alert = "Your entry was succesfully deleted";
+                    $alert = "Tu entrada fue eliminada correctamente";
                 else 
-                    $alert = "There was an error tryin to delete your entry";
+                    $alert = "Hubo algún error eliminando tu entrada";
             }
             else if (isset($_POST['search'])) 
             {
-                $searchText = $_POST['search'];
+                $searchText = depurar($_POST['search']);
 
                 if ($searchText === "")
                     unset($_SESSION["search_query"]);
@@ -43,14 +43,14 @@
                     $_SESSION["search_query"] = $searchText;
             }
             else if (isset($_POST['create']))
-            {
+	    {
                 unset($_SESSION["modify_id"]);
                 header("Location: form.php"); 
                 exit();
             }
             else if (isset($_POST['modify_id']))
             {
-                $_SESSION["modify_id"] = $_POST['modify_id'];
+                $_SESSION["modify_id"] = depurar($_POST['modify_id']);
                 header("Location: form.php");
                 exit();
             }
