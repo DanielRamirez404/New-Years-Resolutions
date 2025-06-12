@@ -1,11 +1,13 @@
 <?php
 
+    include("control/conexion.php");
+
     session_start();
     $postAction = htmlspecialchars($_SERVER["PHP_SELF"]);    
 
     try
     {
-        $connection = $_SESSION["con"];
+        $connection = get_session_connexion();
 
         $tableCreationQuery = <<<QUERY
             CREATE TABLE IF NOT EXISTS Resolution(
@@ -55,7 +57,7 @@
     }
     catch(Exception $exception)
     {
-        $error = "An error occured: " . $exception->getMessage();
+	    header("location: error.php");
     }
 ?>
 
