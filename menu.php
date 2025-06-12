@@ -5,7 +5,7 @@
 
     try
     {
-        $connection = new mysqli($_SESSION["server"], $_SESSION["username"], $_SESSION["password"], "Resolutions");
+        $connection = $_SESSION["con"];
 
         $tableCreationQuery = <<<QUERY
             CREATE TABLE IF NOT EXISTS Resolution(
