@@ -1,5 +1,6 @@
 <?php
 
+    include("include/depurar.php");
     include("control/conexion.php");
 
     session_start();

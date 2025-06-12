@@ -1,6 +1,4 @@
 <?php
-	include("../include/depurar.php");
-
 	function get_connexion($username, $password) {
 		$con = new mysqli("localhost", $username, $password, "Resolutions");
 
@@ -11,8 +9,6 @@
 	}
 
 	function create_connexion() {
-		session_start();
-
 		if (isset($_SESSION["username"]))
 			return;
 
@@ -29,8 +25,6 @@
 	}
 
 	function get_session_connexion() {
-		session_start();
-		
 		if (!isset($_SESSION["username"]) || !isset($_SESSION["password"]))
 			throw new Exception("No hay credenciales suficientes para conectarse a la base de datos");
 		
