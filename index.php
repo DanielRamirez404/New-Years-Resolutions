@@ -1,3 +1,11 @@
+<?php
+
+/* Integrantes:
+ * Daniel Ramírez 31.499.506
+ * Adolfo Gamboa 31.048.354
+ * */
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
